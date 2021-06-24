@@ -2,35 +2,18 @@ import React, { useState } from 'react'
 import './ExpenseForm.scss'
 
 const ExpenseForm = (props) => {
-  // const [state, setState] = useState({ title: '', amount: '', date: '' })
-
   const [enteredTitle, setEnteredTitle] = useState('')
   const [enteredAmount, setEnteredAmount] = useState('')
   const [enteredDate, setEnteredDate] = useState('')
 
   const titleChangeHandler = (e) => {
     setEnteredTitle(e.target.value)
-    // setState({
-    //   ...state,
-    //   enteredTitle: e.target.value,
-    // })
-    // setState((prewState) => {
-    //   return { ...prewState, enteredTitle: e.target.value }
-    // })
   }
   const amountChangeHandler = (e) => {
     setEnteredAmount(e.target.value)
-    // setState({
-    //   ...state,
-    //   enteredAmount: e.target.value,
-    // })
   }
   const dateChangeHandler = (e) => {
     setEnteredDate(e.target.value)
-    // setState({
-    //   ...state,
-    //   enteredDate: e.target.value,
-    // })
   }
   const formSubmitHandler = (e) => {
     e.preventDefault()
