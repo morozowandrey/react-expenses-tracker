@@ -10,21 +10,21 @@ class Users extends Component {
     this.state = {
       showUsers: true
     }
+
+  }
+
+  toggleUsersHandler = () => {
     this.setState((curState) => {
       return {
         showUsers: !curState.showUsers
       }
-    })
-  }
-
-  toggleUsersHandler = () => {
-    this.setState((curState) => !curState);
+    });
   };
 
   render() {
     const usersList = (
       <ul>
-        {DUMMY_USERS.map((user) => (
+        {this.props.users.map((user) => (
           <User key={user.id} name={user.name} />
         ))}
       </ul>
@@ -38,12 +38,6 @@ class Users extends Component {
     </div>
   }
 }
-
-const DUMMY_USERS = [
-  { id: 'u1', name: 'Max' },
-  { id: 'u2', name: 'Manuel' },
-  { id: 'u3', name: 'Julie' },
-];
 
 // const Users = () => {
 //   const [showUsers, setShowUsers] = useState(true);
