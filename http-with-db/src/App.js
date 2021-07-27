@@ -37,15 +37,18 @@ function App() {
       }
 
       const data = await res.json()
-      const transformedData = data.results.map((movie) => {
-        return {
-          id: movie.episode_id,
-          title: movie.title,
-          openingText: movie.opening_crawl,
-          releaseDate: movie.release_date,
-        }
-      })
-      setMovies(transformedData)
+
+      let loadedMovies = []
+
+      for (const key in data) {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].openingText,
+          releaseDate: data[key].releaseDate,
+        })
+      }
+      setMovies(loadedMovies)
     } catch (error) {
       setError(error.message)
     }
@@ -70,8 +73,18 @@ function App() {
     content = <p>Loading...</p>
   }
 
-  function addMovieHandler(movie) {
-    console.log(movie)
+  async function addMovieHandler(movie) {
+    const res = await fetch(
+      'https://react-http-f112f-default-rtdb.europe-west1.firebasedatabase.app/movies.json',
+      {
+        method: 'POST',
+        body: JSON.stringify(movie),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    const data = await res.json()
   }
 
   return (
