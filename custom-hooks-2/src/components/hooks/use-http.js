@@ -8,14 +8,15 @@ const useHttpRequest = () => {
     setIsLoading(true)
     setError(null)
     try {
+      console.log(requestConfig)
       const response = await fetch(requestConfig.url, {
         headers: requestConfig.headers
-          ? {
+          ? requestConfig.headers
+          : {
               'Content-Type': 'application/json',
-            }
-          : requestConfig.headers,
-        body: requestConfig.body ? null : requestConfig.body,
-        method: requestConfig.method ? 'GET' : requestConfig.method,
+            },
+        body: requestConfig.body ? requestConfig.body : null,
+        method: requestConfig.method ? requestConfig.method : 'GET',
       })
 
       if (!response.ok) {
