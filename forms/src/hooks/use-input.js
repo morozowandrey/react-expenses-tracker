@@ -7,11 +7,8 @@ const useInput = (validateValue) => {
   const valueIsValid = validateValue(enteredValue)
   const hasError = !valueIsValid && isTouched
 
-  console.log(valueIsValid)
-
   const valueChangeHandler = (e) => {
     setEnteredValue(e.target.value)
-    console.log(e.target.value)
   }
 
   const inputBlurHandler = (e) => {
