@@ -3,7 +3,6 @@ import Card from '../UI/Card'
 import MealItem from './MealItem/MealItem'
 
 const AvailableMeals = (props) => {
-  console.log(props.meals);
   const mealsList = props.meals.map((meal) => (
     <MealItem
       key={meal.id}
