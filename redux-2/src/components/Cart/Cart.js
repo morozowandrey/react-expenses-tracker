@@ -1,18 +1,35 @@
-import Card from '../UI/Card';
-import classes from './Cart.module.css';
-import CartItem from './CartItem';
+import Card from '../UI/Card'
+import classes from './Cart.module.css'
+import CartItem from './CartItem'
+import { useSelector } from 'react-redux'
+import { Fragment } from 'react'
 
 const Cart = (props) => {
+  const cartItemsData = useSelector((state) => state.cart.items)
+  const cartTotalPrice = useSelector((state) => state.cart.totalPrice)
+  const cartTotalQuantity = useSelector((state) => state.cart.totalQuantity)
+
+  const cartItems = cartItemsData.map((item, i) => (
+    <Fragment key={i}>
+      <CartItem
+        item={{
+          title: item.title,
+          quantity: item.quantity,
+          price: item.price,
+          total: item.total,
+        }}
+      />
+    </Fragment>
+  ))
+
   return (
     <Card className={classes.cart}>
       <h2>Your Shopping Cart</h2>
-      <ul>
-        <CartItem
-          item={{ title: 'Test Item', quantity: 3, total: 18, price: 6 }}
-        />
-      </ul>
+      <p>Total price {cartTotalPrice}</p>
+      <p>Total quantity {cartTotalQuantity}</p>
+      <ul>{cartItems}</ul>
     </Card>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart
