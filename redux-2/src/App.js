@@ -4,7 +4,7 @@ import Products from './components/Shop/Products'
 import Notification from './components/UI/Notification'
 import { Fragment } from 'react'
 
-import { uiActions } from './store/ui-slice'
+import { sendCardData, fetchCardData } from './store/cart-actions'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 
@@ -17,46 +17,18 @@ function App() {
   const notification = useSelector((state) => state.ui.notification)
 
   useEffect(() => {
-    const fetchCart = async () => {
-      dispatch(
-        uiActions.showNotification({
-          status: 'pending',
-          title: 'Sending...',
-          message: 'Sending cart data',
-        })
-      )
-      const response = await fetch(
-        'https://react-reduxx-default-rtdb.europe-west1.firebasedatabase.app/cart.json',
-        { method: 'PUT', body: JSON.stringify(cart) }
-      )
+    dispatch(fetchCardData())
+  }, [dispatch])
 
-      if (!response.ok) {
-        throw new Error('Sendind cart data failed.')
-      }
-
-      dispatch(
-        uiActions.showNotification({
-          status: 'success',
-          title: 'Success!',
-          message: 'Sent cart data successfully',
-        })
-      )
-    }
-
+  useEffect(() => {
     if (isInitial) {
       isInitial = false
       return
     }
 
-    fetchCart().catch((error) => {
-      dispatch(
-        uiActions.showNotification({
-          status: 'error',
-          title: 'Error',
-          message: 'Sendind cart data failed',
-        })
-      )
-    })
+    if (cart.changed) {
+      dispatch(sendCardData(cart))
+    }
   }, [cart, dispatch])
 
   return (
