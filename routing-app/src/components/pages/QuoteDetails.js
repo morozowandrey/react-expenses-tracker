@@ -1,6 +1,6 @@
 // import classes from './HighlightedQuote.module.css'
-import { Fragment } from 'react/cjs/react.production.min'
-import { Route, Switch, useParams } from 'react-router'
+import { Fragment } from 'react'
+import { Route, useParams, Link, useRouteMatch } from 'react-router-dom'
 import Comments from '../comments/Comments'
 import HighlightedQuote from '../quotes/HighlightedQuote'
 
@@ -18,6 +18,7 @@ const DUMMY_QUOTES = [
 ]
 
 const QuoteDetails = (props) => {
+  const match = useRouteMatch()
   const routeParams = useParams()
   const quote = DUMMY_QUOTES.find((quote) => quote.id === routeParams.quoteId)
 
@@ -28,11 +29,17 @@ const QuoteDetails = (props) => {
   return (
     <Fragment>
       <HighlightedQuote text={quote.text} author={quote.author} />
-      <Switch>
-        <Route path={`/quotes/${routeParams.quoteId}/comments`}>
-          <Comments />
-        </Route>
-      </Switch>
+      <Route path={match.path} exact>
+        <div className="centered">
+          <Link className="btn--flat" to={`${match.url}/comments`}>
+            Load Comments
+          </Link>
+        </div>
+      </Route>
+
+      <Route path={`${match.path}/comments`}>
+        <Comments />
+      </Route>
     </Fragment>
   )
 }
